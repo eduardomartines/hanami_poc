@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+  app:
+    container_name: hanami_poc_app
+    image: hanami_poc/app:latest
+    build:
+      context: .
+      args:
+        - UID=${UID}
+        - GID=${GID}
+    volumes:
+      - .:/home/hanami_poc/app:cached
+      - bundle_cache:/home/hanami_poc/bundle_cache:delegated
+      # - sprockets_cache:/home/hanami_poc/sprockets_cache:delegated
+      # - bootsnap_cache:/home/hanami_poc/bootsnap_cache:delegated
+    stdin_open: true
+    tty: true
+    depends_on:
+      - db
+    ports:
+      - 2300:2300
+    # tmpfs:
+    #   - /home/hanami_poc/app/tmp:uid=${UID},gid=${GID}
+    #   - /home/hanami_poc/app/log:uid=${UID},gid=${GID}
+
+  db:
+    container_name: hanami_poc_db
+    image: postgres:13.2-alpine
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/postgresql/data:delegated
+    environment:
+      POSTGRES_USER: hanami_poc
+      POSTGRES_HOST_AUTH_METHOD: trust
+    restart: always
+    # logging:
+    #   driver: none
+  
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  bundle_cache:
+  # sprockets_cache:
+  # bootsnap_cache:
+  db_data:
