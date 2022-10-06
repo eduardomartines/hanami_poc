@@ -15,8 +15,8 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.7.0)
-      public_suffix (>= 2.0.2, < 5.0)
+    addressable (2.8.1)
+      public_suffix (>= 2.0.2, < 6.0)
     better_errors (2.9.1)
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
@@ -127,7 +127,7 @@ GEM
     nokogiri (1.11.3-x86_64-linux)
       racc (~> 1.4)
     pg (1.2.3)
-    public_suffix (4.0.6)
+    public_suffix (5.0.0)
     racc (1.5.2)
     rack (2.2.3)
     rack-test (1.1.0)
